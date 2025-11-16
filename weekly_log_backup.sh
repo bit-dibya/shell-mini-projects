@@ -13,4 +13,12 @@ mkdir -p "$BACKUPDIR"
 #going into the log directory and create a gzipped tar of everything and save as OUTFILE
 tar -czf "$OUTFILE" -C "$LOGDIR"
 
+#logging
+if [ $? -eq 0 ]; then
+	echo "$(date -Iseconds) Backup OK: $OUTFILE" >> /var/log/automation/log_backup.log
+else
+	echo "$(date -Iseconds) Backup FAIL" >> /var/log/automation/log_backup.log
+	exit 1
+fi
+
 

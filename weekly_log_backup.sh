@@ -21,4 +21,7 @@ else
 	exit 1
 fi
 
+#removing backups older than 15 days 
+find "$BACKUPDIR" -type f -name 'logs_backup_*.tar.gz' -mtime +"$RETENTION_DAYS" -exec rm -f {} \;
+
 

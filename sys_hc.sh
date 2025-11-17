@@ -9,7 +9,7 @@ CPU_THRESH=80
 MEM_THRESH=80
 DISK_THRESH=85
 
-timestamp() { date -Isecond; }
+timestamp() { date -Iseconds }
 
 CPU=$(top -bn1 | awk '/CPU/ {print 100 -$8}')
 MEM=$(free | awk '/Mem:/ {print $3/$2 * 100}')

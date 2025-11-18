@@ -1,0 +1,3 @@
+cron jobs for all the scripts are configured as below:
+
+/1 * * * * /home/dibyagiri/Git/shell-mini-projects/sys_hc.sh >> /home/dibyagiri/cronlogs/system_health_cron.log

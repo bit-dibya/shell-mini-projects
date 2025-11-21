@@ -3,6 +3,14 @@
 #defingng output log path
 OUTLOG=/home/dibyagiri/syslogs/system_health.log
 
+
+#log rotation
+MAX_SIZE=$((15 * 1024))  #15KB to test
+if [ -f "$OUTLOG" ] && [ "$(stat -c%s "$OUTLOG")" -ge "$MAX_SIZE" ]; then
+  mv "$OUTLOG" "${OUTLOG%.*}_$(date +%F_%H%M%S).log"
+fi
+
+
 #defingin thersholds for cpu,memory and disk utilisation
 CPU_THRESH=80
 MEM_THRESH=80
@@ -13,12 +21,15 @@ timestamp() {
   date -Iseconds
 }
 
+
 CPU=$(top -bn1 | awk -F'[, ]+' '/Cpu\(s\):/ {print 100 - $8}')    #extracting cpu utilisation from top
 MEM=$(free | awk '/Mem:/ {print $3/$2 * 100}')    #extracting memory utilisation from free
 DISK=$(df / | awk 'END{print $5}' | tr -d '%')    #extracting disk utilisation from df
 
+
 #printing the utilisations
 echo "$(timestamp) CPU:${CPU}% MEM:${MEM}% DISK:${DISK}%" >> "$OUTLOG"
+
 
 #setting up alert
 awk -v c="$CPU" -v m="$MEM" -v d="$DISK" -v t="$(timestamp)" \

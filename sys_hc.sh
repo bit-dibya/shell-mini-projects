@@ -5,7 +5,7 @@ OUTLOG=/home/dibyagiri/syslogs/system_health.log
 
 
 #log rotation
-MAX_SIZE=$((15 * 1024))  #15KB to test
+MAX_SIZE=$((1024 * 1024))  #1MB limit
 if [ -f "$OUTLOG" ] && [ "$(stat -c%s "$OUTLOG")" -ge "$MAX_SIZE" ]; then
   mv "$OUTLOG" "${OUTLOG%.*}_$(date +%F_%H%M%S).log"
 fi
